@@ -10,7 +10,7 @@ def Open_operations(File_name = File_operations):
         return data
 
 def Select_operations(orders_type, File_name= File_operations):
-    "Возращает список операций по типу, сортировка по дате"
+    "Возращает список операций по типу, свеху списка самые последние операции по дате"
     operations= Open_operations(File_name)
     oper_filtered = []
     for item in operations:
