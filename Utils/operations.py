@@ -61,7 +61,7 @@ def print_top_operations(File_name= File_operations, operations_count=5,orders_t
         if 'from' in oper:
             message_operations +=f'{ mask_Account(oper["from"]) } -> {mask_Account(oper["to"])} \n'
         else:
-            message_operations += f'Счет {mask_Account(oper["to"])} \n'
+            message_operations += f'{mask_Account(oper["to"])} \n'
         message_operations +=f'{ oper["operationAmount"]["amount"] } {oper["operationAmount"]["currency"]["name"]} \n'
 
         message_operations += f'\n'

@@ -14,3 +14,4 @@ def test_Select_operations():
 
 def test_Sprint_top_operations():
     assert operations.print_top_operations("oper_test.josn") == '2019-03-23 Перевод со счета на счет \nСчет **4719 -> Счет **1160 \n43318.34 руб. \n\n'
+    assert operations.print_top_operations("oper_test2.josn") == '2019-03-23 Перевод \nСчет **1160 \n43318.34 руб. \n\n'
