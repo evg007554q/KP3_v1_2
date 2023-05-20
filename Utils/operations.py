@@ -2,7 +2,7 @@ import json
 import datetime
 from operator import itemgetter
 
-File_operations = '../operations.json'
+File_operations = '../operations.josn'
 def Open_operations(File_name = File_operations):
     "возращаем список операций из файла"
     with open(File_name,'r',encoding='utf-8') as read_file:
@@ -11,7 +11,7 @@ def Open_operations(File_name = File_operations):
 
 def Select_operations(orders_type, File_name= File_operations):
     "Возращает список операций по типу сортировка по дате"
-    operations= Open_operations()
+    operations= Open_operations(File_name)
     oper_filtered = []
     for item in operations:
         if 'state' in item:
@@ -32,18 +32,21 @@ def mask_Account(acc):
         itAcc = False
 
     acc_num = ""
+    acc_str = ""
     for c in acc:
         if c.isdigit():
            acc_num += c
+        else:
+            acc_str += c
 
     if itAcc:
-        return '**' + acc_num[len(acc_num)-4:]
+        return acc_str + '**' + acc_num[len(acc_num)-4:]
     else:
-        return acc_num[:4] + ' ' + acc_num[4:6] + '** **** ' + acc_num[12:]
+        return acc_str + acc_num[:4] + ' ' + acc_num[4:6] + '** **** ' + acc_num[12:]
 
-def print_top_operations(operations_count=5,orders_type="EXECUTED"):
+def print_top_operations(File_name= File_operations, operations_count=5,orders_type="EXECUTED"):
     "Выводит заданое количество последних операций по указаному типу"
-    operations = Select_operations(orders_type)
+    operations = Select_operations(orders_type, File_name)
     message_operations=""
     for item in range(min(len(operations),operations_count)):
         oper=operations[item]
@@ -56,7 +59,7 @@ def print_top_operations(operations_count=5,orders_type="EXECUTED"):
         #)
         message_operations +=f'{ datetime.datetime.strptime(oper["date"],"%Y-%m-%dT%H:%M:%S.%f").date() } {oper["description"]} \n'
         if 'from' in oper:
-            message_operations +=f'{ mask_Account(oper["from"]) } -> Счет {mask_Account(oper["to"])} \n'
+            message_operations +=f'{ mask_Account(oper["from"]) } -> {mask_Account(oper["to"])} \n'
         else:
             message_operations += f'Счет {mask_Account(oper["to"])} \n'
         message_operations +=f'{ oper["operationAmount"]["amount"] } {oper["operationAmount"]["currency"]["name"]} \n'
